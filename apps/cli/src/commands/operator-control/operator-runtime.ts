@@ -19,7 +19,7 @@ export function bootOperator(cli: Vorpal) {
         .command('boot-operator', 'Starts a runtime of the operator.')
         .option('-k, --wallet-key <walletKey>', 'The private key of the operator.')
         .option('-w, --use-whitelist', 'Flag to use a whitelist for the operator runtime.')
-        .option('-o, --owners <owners>', 'A comma-separated list of owners if using a whitelist.', list => list.split(','))
+        .option('-o, --owners <owners>', 'A comma-separated list of owners if using a whitelist.', (list: string) => list.split(','))
         .action(async function (this: Vorpal.CommandInstance, args: BootOperatorArgs) {
             let walletKey = args.options.walletKey;
             if (!walletKey) {
@@ -76,7 +76,7 @@ export function bootOperator(cli: Vorpal) {
             stopFunction = await operatorRuntime(
                 signer,
                 undefined,
-                (log) => this.log(log),
+                (log: any) => this.log(log),
                 selectedOwners,
             );
 
