@@ -10,9 +10,10 @@ export function bootOperator(cli: Vorpal) {
 
     cli
         .command('boot-operator', 'Starts a runtime of the operator.')
-        .option('--walletKey [walletKey]', 'Private key of the operator')
-        .option('--useWhitelist [useWhitelist]', 'Flag to use a whitelist for the operator runtime')
-        .option('--owners [owners]', 'Comma separated list of owners to include in the whitelist')
+        .option('-w, --walletKey <walletKey>', 'Private key of the operator')
+        .option('-u, --useWhitelist <useWhitelist>', 'Flag to use a whitelist for the operator runtime')
+        .option('-o, --owners <owners>', 'Comma separated list of owners to include in the whitelist')
+        .types({ string: ['w', 'walletKey', 'o', 'owners'] })
         .action(async function (this: Vorpal.CommandInstance, args: any) {
             let { walletKey } = args.options;
 
@@ -23,7 +24,8 @@ export function bootOperator(cli: Vorpal) {
                     message: 'Enter the private key of the operator:',
                     mask: '*'
                 };
-                const { result } = await this.prompt(walletKeyPrompt);
+                const result = await this.prompt(walletKeyPrompt);
+                console.log('debug#wallet', result)
                 walletKey = result.walletKey;
             }
 
